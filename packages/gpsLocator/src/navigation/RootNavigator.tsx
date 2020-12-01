@@ -5,39 +5,39 @@ import { noop } from 'lodash';
 import { Dashboard } from '../sceenes/DashBoard/DashBoard';
 import { setTopLevelNavigator } from './NavigationService';
 import { ROUTES } from './routes';
-import { AuthStackParamList, ModalStackParamList } from './types';
+import { AuthStackParamList } from './types';
 
-const ModalStackNavigator = createStackNavigator<ModalStackParamList>();
-const ModalStackNavigatorScreen = () => {
-  return (
-    <ModalStackNavigator.Navigator
-      headerMode={'none'}
-      screenOptions={{
-        cardStyle: { backgroundColor: 'transparent' },
-        cardOverlayEnabled: true,
-        cardStyleInterpolator: ({ current: { progress } }) => ({
-          cardStyle: {
-            opacity: progress.interpolate({
-              inputRange: [0, 0.5, 0.9, 1],
-              outputRange: [0, 0.25, 0.7, 1],
-            }),
-          },
-          overlayStyle: {
-            opacity: progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, 0.5],
-              extrapolate: 'clamp',
-            }),
-          },
-        }),
-      }}
-      mode={'modal'}
-      initialRouteName={''}
-    >
-      {/*<ModalStackNavigator.Screen name={MODAL_ROUTES.MODAL_MESSAGE} component={ModalMessage} />*/}
-    </ModalStackNavigator.Navigator>
-  );
-};
+// const ModalStackNavigator = createStackNavigator<ModalStackParamList>();
+// const ModalStackNavigatorScreen = () => {
+//   return (
+//     <ModalStackNavigator.Navigator
+//       headerMode={'none'}
+//       screenOptions={{
+//         cardStyle: { backgroundColor: 'transparent' },
+//         cardOverlayEnabled: true,
+//         cardStyleInterpolator: ({ current: { progress } }) => ({
+//           cardStyle: {
+//             opacity: progress.interpolate({
+//               inputRange: [0, 0.5, 0.9, 1],
+//               outputRange: [0, 0.25, 0.7, 1],
+//             }),
+//           },
+//           overlayStyle: {
+//             opacity: progress.interpolate({
+//               inputRange: [0, 1],
+//               outputRange: [0, 0.5],
+//               extrapolate: 'clamp',
+//             }),
+//           },
+//         }),
+//       }}
+//       mode={'modal'}
+//       initialRouteName={''}
+//     >
+//       {/*<ModalStackNavigator.Screen name={MODAL_ROUTES.MODAL_MESSAGE} component={ModalMessage} />*/}
+//     </ModalStackNavigator.Navigator>
+//   );
+// };
 
 const AuthStackNavigator = createStackNavigator<AuthStackParamList>();
 const AuthStackNavigatorScreen = ({ isAuth }: { isAuth: boolean }) => {

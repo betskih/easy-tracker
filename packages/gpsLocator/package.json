@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -33,9 +33,10 @@
     "@babel/runtime": "7.8.4",
     "@react-native-community/cli-platform-android": "4.11.0",
     "@react-native-community/eslint-config": "1.1.0",
+    "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "5.7.3",
     "@react-navigation/stack": "5.9.0",
-    "@types/jest": "25.2.3",
+    "@types/jest": "^25.2.3",
     "@types/lodash": "4.14.161",
     "@types/node": "^14.14.6",
     "@types/react-native": "0.63.18",
@@ -44,16 +45,16 @@
     "@types/redux-persist": "4.3.1",
     "@typescript-eslint/eslint-plugin": "2.27.0",
     "@typescript-eslint/parser": "2.27.0",
-    "@react-native-community/masked-view": "0.1.10",
     "babel-jest": "25.1.0",
     "babel-loader": "^8.1.0",
     "combine-section-reducers": "1.0.6",
     "cross-env": "7.0.2",
+    "deep-freeze": "0.0.1",
     "dotenv": "^8.2.0",
     "eslint": "^6.5.1",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-redux-complexity": "git+https://github.com/paullasarev/eslint-plugin-redux-complexity.git",
-    "jest": "25.1.0",
+    "jest": "^26.6.3",
     "json-schema-ref-parser": "9.0.6",
     "json-schema-to-typescript": "9.1.1",
     "lint-staged": "10.2.11",
@@ -83,8 +84,7 @@
       "jsx",
       "json",
       "node"
-    ],
-    "testResultsProcessor": "jest-junit"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

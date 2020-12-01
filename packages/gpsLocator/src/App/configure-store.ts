@@ -35,9 +35,9 @@ const migrate = (state: any, version: number) => {
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['app'],
+  whitelist: ['app', 'geo'],
   blacklist: [],
-  version: 10,
+  version: 12,
   migrate,
   stateReconciler: hardSet,
   transforms: [

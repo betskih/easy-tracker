@@ -1,9 +1,9 @@
 import { each, keys, pick } from 'lodash/fp';
 import { Action, AnyAction, combineReducers } from 'redux';
-import { CommonReducerConfig, requestsReducer } from 'redux-saga-requests';
+// import { CommonReducerConfig, requestsReducer } from 'redux-saga-requests';
 
-import { fillDefaults, getDataBySchema, getDefaultsBySchema } from '../schema/fill-defaults';
-import { IJsonSchema } from '../schema/json-schema';
+// import { fillDefaults, getDataBySchema, getDefaultsBySchema } from '../schema/fill-defaults';
+// import { IJsonSchema } from '../schema/json-schema';
 
 export type BaseReducer<S = any, A extends Action = AnyAction> = (
   state: S,
@@ -84,22 +84,22 @@ export const defaultApiState = <T>(data: T): ApiState<T> => {
   };
 };
 
-export function getDefaultApiState<T>(schema: IJsonSchema, obj: {} = {}): ApiState<T> {
-  return defaultApiState<T>(fillDefaults(schema)(obj));
-}
-
-export function apiRequestReducer(
-  actionType: string,
-  schema: IJsonSchema,
-  config: CommonReducerConfig = {},
-) {
-  return requestsReducer({
-    ...config,
-    actionType,
-    getDefaultData: getDefaultsBySchema(schema),
-    getData: getDataBySchema(schema),
-  });
-}
+// export function getDefaultApiState<T>(schema: IJsonSchema, obj: {} = {}): ApiState<T> {
+//   return defaultApiState<T>(fillDefaults(schema)(obj));
+// }
+//
+// export function apiRequestReducer(
+//   actionType: string,
+//   schema: IJsonSchema,
+//   config: CommonReducerConfig = {},
+// ) {
+//   return requestsReducer({
+//     ...config,
+//     actionType,
+//     getDefaultData: getDefaultsBySchema(schema),
+//     getData: getDataBySchema(schema),
+//   });
+// }
 
 export interface PaginationStatus {
   page: number;

@@ -45,12 +45,12 @@ function needAuthorization(status: number, requestUrl: string) {
 
 export function* onError(error: any, action: RequestAction): any {
   const status: number = error.status;
-  const message = get(error, 'data.message');
-  const detailedMessage = get(error, 'data.detailedMessage');
-  const timestamp = get(error, 'data.timestamp');
-  const method = get(action, 'request.method', 'GET');
-  const url = error.url;
-  const params = { status, message, url, timestamp, detailedMessage, method };
+  // const message = get(error, 'data.message');
+  // const detailedMessage = get(error, 'data.detailedMessage');
+  // const timestamp = get(error, 'data.timestamp');
+  // const method = get(action, 'request.method', 'GET');
+  // const url = error.url;
+  // const params = { status, message, url, timestamp, detailedMessage, method };
   const requestUrl = get(action, 'request.url');
 
   yield put(appLog('API error', { error, action }, LogLevel.ERROR));

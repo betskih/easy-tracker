@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { LayoutAnimation, Platform, UIManager } from 'react-native';
-import { OS_ANDROID, OS_WEB } from '../constants/constants';
+import { OS_ANDROID } from '../constants/constants';
 
 export function useSelectorFactory<TState, TSelected>(
   selectorFactory: (...args: any[]) => (state: TState) => TSelected,
@@ -12,12 +12,10 @@ export function useSelectorFactory<TState, TSelected>(
 }
 
 export function useAnimated() {
-  if (Platform.OS !== OS_WEB) {
-    if (Platform.OS === OS_ANDROID && UIManager.setLayoutAnimationEnabledExperimental) {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  if (Platform.OS === OS_ANDROID && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
   }
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 }
 
 export function useTimeout(

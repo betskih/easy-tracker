@@ -1,6 +1,6 @@
 import { takeEvery, select, put, fork } from 'redux-saga/effects';
 
-import { getUniqueId, isLocationEnabled } from 'react-native-device-info';
+import { getUniqueId } from 'react-native-device-info';
 import { back, replace } from '../navigation/NavigationService';
 import { BACK_ROUTE, IAppRoute, REPLACE_ROUTE, setAppState, setDeviceInfo } from './actions';
 import { appStatusSelector } from './selectors';
