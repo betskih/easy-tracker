@@ -1,0 +1,5 @@
+/build/**
+/coverage/**
+/docs/**
+/dist/**
+!.eslintrc.js
