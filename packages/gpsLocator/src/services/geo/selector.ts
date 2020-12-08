@@ -17,3 +17,9 @@ export const getLastArrayList = createSelector(getLastArray, (state) => {
     speed: item.coords.speed,
   }));
 });
+
+export const getFirstArray = createSelector(getGeoState, (state) =>
+  get(state, `${state.firstIndex}`, []),
+);
+
+export const getGeoPending = createSelector(getGeoState, (state) => get(state, 'pending'));

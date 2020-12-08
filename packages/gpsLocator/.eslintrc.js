@@ -37,7 +37,7 @@ module.exports = {
     'react/jsx-no-bind': 'error',
     'react/jsx-pascal-case': 'error',
     'vars-on-top': 'error',
-    'redux-complexity/redux-complexity': ['error', { max: 7 }],
+    'redux-complexity/redux-complexity': ['error', { max: 9 }],
     // 'redux-complexity/require-attributes': [
     //   'error',
     //   {

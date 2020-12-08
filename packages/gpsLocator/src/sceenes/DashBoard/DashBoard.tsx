@@ -1,11 +1,21 @@
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import { useDispatch, useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 import { setNewLocation } from '../../services/geo/actions';
 import { getLastArrayList } from '../../services/geo/selector';
 import { DashboardView } from './DashBoardView';
 
 const UPDATE_LOCATION_INTERVAL = 10000;
+const coords = {
+  accuracy: 0,
+  altitude: 0,
+  heading: 0,
+  latitude: 0,
+  longitude: 0,
+  speed: 0,
+  altitudeAccuracy: 0,
+};
 
 export const Dashboard: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -15,6 +25,7 @@ export const Dashboard: FunctionComponent = () => {
   const onPressButton = useCallback(() => {
     if (isRecording) {
       Geolocation.clearWatch(watch);
+      dispatch(setNewLocation({ timestamp: dayjs().valueOf(), coords }));
       setRecord(!isRecording);
     } else {
       const newWatch = Geolocation.watchPosition(

@@ -1,13 +1,26 @@
-import { IAppActions, SET_APP_STATE, SET_DEVICE_INFO } from './actions';
+import { success } from 'redux-saga-requests';
+import { get } from 'lodash';
+import {
+  FETCH_AUTH_TOKENS,
+  FETCH_GEO_ID,
+  IAppActions,
+  SET_APP_STATE,
+  SET_DEVICE_INFO,
+} from './actions';
 import { APP_STATUS, IAppState } from './types';
 
 export const initialState: IAppState = {
   deviceInfo: {},
   appState: APP_STATUS.STARTED,
+  userId: '',
+  geoId: '',
+  token: '',
+  refreshToken: '',
   isModalOpen: false,
 };
 
 export function app(state: IAppState = initialState, action: IAppActions) {
+  const responce = get(action, 'data.data', {});
   switch (action.type) {
     case SET_APP_STATE:
       return {
@@ -18,6 +31,18 @@ export function app(state: IAppState = initialState, action: IAppActions) {
       return {
         ...state,
         deviceInfo: action.deviceInfo,
+      };
+    case success(FETCH_AUTH_TOKENS):
+      return {
+        ...state,
+        token: responce.token,
+        refreshToken: responce.refreshToken,
+        userId: responce.id,
+      };
+    case success(FETCH_GEO_ID):
+      return {
+        ...state,
+        geoId: responce.geoId,
       };
     default:
       return state;

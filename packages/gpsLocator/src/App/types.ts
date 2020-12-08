@@ -17,6 +17,10 @@ export type DeviceInfo = {
 export interface IAppState {
   deviceInfo: DeviceInfo | {};
   appState: APP_STATUS;
+  userId: string;
+  geoId: string;
+  token: string;
+  refreshToken: string;
   isModalOpen: boolean;
 }
 

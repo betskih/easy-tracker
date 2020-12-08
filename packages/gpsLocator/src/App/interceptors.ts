@@ -1,18 +1,14 @@
 import { Action } from 'redux';
 import { get } from 'lodash';
 import { RequestAction } from 'redux-saga-requests';
-import { put } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 
 import { IApiRequest } from '../services/redux/ApiAction';
 import { LogLevel } from './types';
-import { appLog } from './actions';
+import { appLog, REFRESH_TOKENS, refreshTokens } from './actions';
+import { getTokenSelector } from './selectors';
 
-const makeAuthRequest = (
-  request: IApiRequest,
-  access_token: string,
-  id_token: string,
-  isAuthenticated: boolean,
-) => {
+const makeAuthRequest = (request: IApiRequest, access_token: string, isAuthenticated: boolean) => {
   return {
     ...request,
     url: request.url,
@@ -25,12 +21,10 @@ const makeAuthRequest = (
 };
 
 export function* onRequest(request: IApiRequest, action: Action) {
-  const access_token = '';
-  const id_token = '';
-  // yield select(appSelector);
-  const isAuthenticated = true;
-  // yield select(isAuthenticatedSelector);
-  return makeAuthRequest(request, access_token, id_token, isAuthenticated);
+  const tokens = yield select(getTokenSelector);
+  const access_token = action.type === REFRESH_TOKENS ? tokens.refreshToken : tokens.token;
+  const isAuthenticated = tokens.token.length > 0 && tokens.refreshToken.length > 0;
+  return makeAuthRequest(request, access_token, isAuthenticated);
 }
 
 const ignore504 = false; //getFeatureFlag('ignore504');
@@ -45,12 +39,7 @@ function needAuthorization(status: number, requestUrl: string) {
 
 export function* onError(error: any, action: RequestAction): any {
   const status: number = error.status;
-  // const message = get(error, 'data.message');
-  // const detailedMessage = get(error, 'data.detailedMessage');
-  // const timestamp = get(error, 'data.timestamp');
-  // const method = get(action, 'request.method', 'GET');
-  // const url = error.url;
-  // const params = { status, message, url, timestamp, detailedMessage, method };
+  const actionType = action.type;
   const requestUrl = get(action, 'request.url');
 
   yield put(appLog('API error', { error, action }, LogLevel.ERROR));
@@ -64,7 +53,9 @@ export function* onError(error: any, action: RequestAction): any {
   }
 
   if (status === 403) {
-    // yield put(appRoute(AUTH_ROUTES.FORBIDDEN, params));
+    if (actionType !== REFRESH_TOKENS) {
+      yield put(refreshTokens());
+    }
   } else if (status === 422) {
     // should be handled in reducer
   } else {

@@ -1,10 +1,60 @@
 import { Action, AnyAction } from 'redux';
+import { IApiAction } from '../services/redux/ApiAction';
+import {
+  GET_GEO_ID_URL,
+  MOBILE_LOGIN_URL,
+  MOBILE_REFRESH_TOKENS_URL,
+} from '../constants/endpoints';
 import { APP_STATUS, DeviceInfo, LogLevel } from './types';
 
 export const CLEAR_PERSISTED_STORE = 'CLEAR_PERSISTED_STORE';
 export const SET_APP_STATE = 'SET_APP_STATE';
 export const SET_DEVICE_INFO = 'SET_DEVICE_INFO';
 export const APP_LOG = 'APP_LOG';
+export const FETCH_AUTH_TOKENS = 'FETCH_AUTH_TOKENS';
+export const REFRESH_TOKENS = 'REFRESH_TOKENS';
+export const FETCH_GEO_ID = 'FETCH_GEO_ID';
+
+export interface IRefreshTokens extends IApiAction {
+  type: typeof REFRESH_TOKENS;
+}
+export function refreshTokens(): IRefreshTokens {
+  return {
+    type: REFRESH_TOKENS,
+    request: {
+      url: MOBILE_REFRESH_TOKENS_URL,
+      method: 'GET',
+    },
+  };
+}
+
+export interface IFetchGeoId extends IApiAction {
+  type: typeof FETCH_GEO_ID;
+}
+
+export function fetchGeoId(id: string): IFetchGeoId {
+  return {
+    type: FETCH_GEO_ID,
+    request: {
+      url: GET_GEO_ID_URL(id),
+      method: 'GET',
+    },
+  };
+}
+
+export interface IFetchAuthTokens extends IApiAction {
+  type: typeof FETCH_AUTH_TOKENS;
+}
+export function fetchAuthTokens(deviceId: string): IFetchAuthTokens {
+  return {
+    type: FETCH_AUTH_TOKENS,
+    request: {
+      url: MOBILE_LOGIN_URL,
+      method: 'POST',
+      body: JSON.stringify({ deviceId }),
+    },
+  };
+}
 
 export interface ISetDeviceInfo extends AnyAction {
   type: typeof SET_DEVICE_INFO;

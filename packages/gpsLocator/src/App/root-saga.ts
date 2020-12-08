@@ -6,22 +6,20 @@ import { REHYDRATE } from 'redux-persist/lib/constants';
 
 // TODO: use fetchDriver to force api call timeout
 
+import { getApiURL } from '../utilities/config';
 import { onRequest, onSuccess, onError } from './interceptors';
 import { appSaga } from './saga';
 
-const driver = createDriver(fetch, {
-  baseURL: 'https://ya.ru',
-});
-
 export function* rootSaga() {
   yield take(REHYDRATE);
-  const conf = {
-    driver,
+  yield createRequestInstance({
+    driver: createDriver(fetch, {
+      baseURL: getApiURL(),
+    }),
     onRequest,
     onSuccess,
     onError,
-  };
-  yield createRequestInstance(conf);
+  });
   yield fork(watchRequests);
   yield spawn(appSaga);
 }
