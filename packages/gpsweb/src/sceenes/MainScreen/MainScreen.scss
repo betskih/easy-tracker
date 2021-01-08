@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  background-color: #ffffff;
+  .main-screen {
+    display: flex;
+    height: 100%;
+    .left-side{
+      display: flex;
+      height: 100%;
+      flex: 1 1 auto;
+      min-width: 400px;
+    }
+    .right-side{
+      display: flex;
+      height: 100%;
+      width: 400px;
+      min-width: 400px;
+    }
+  }
+
+}
