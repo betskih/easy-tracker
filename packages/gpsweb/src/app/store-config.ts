@@ -12,7 +12,7 @@ const logger = createLogger({ diff: true, collapsed: true });
 const saga = createSagaMiddlware();
 export const configureStore = () => {
   const { requestsSagas } = handleRequests({
-    driver: createDriver(axios.create({ baseURL: 'http://192.168.1.49:8080' })),
+    driver: createDriver(axios.create({ baseURL: 'http://192.168.1.49:8082' })),
   });
   const store = createStore(rootReducer, applyMiddleware(logger, saga));
 

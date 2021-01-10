@@ -1,7 +1,7 @@
 import { takeEvery, put, select, delay, all } from 'redux-saga/effects';
 import { success } from 'redux-saga-requests';
 import { map } from 'lodash';
-import { FETCH_GEO_DATA_BY_ID, fetchGeoData } from '../requests/actions';
+import {FETCH_GEO_DATA_BY_ID, fetchGeoData, updateGeoData} from '../requests/actions';
 import {
   ADD_NEW_GEO_ID,
   fetchFirstRecordDate,
@@ -26,7 +26,7 @@ function* handleCheckUpdates() {
       map(ids, (value) => {
         if (value.isOpened) {
           return put(
-            fetchGeoData({
+            updateGeoData({
               geoId: value.id,
               startDate: dayjs(startDate).valueOf(),
               endDate: dayjs(endDate).valueOf(),
@@ -55,7 +55,7 @@ function* handleParseGeoData(action: any) {
 function* hanldeOpenCloseAccordion(action: IOpenCloseGeoId) {
   const { geoId, isOpened } = action.payload;
   if (!isOpened) {
-    const startDate = yield select(getStartDateSelector) || 1607000000000;
+    const startDate = yield select(getStartDateSelector);
     const endDate = yield select(getEndDateSelector) || dayjs().valueOf();
     yield put(
       fetchGeoData({

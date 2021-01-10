@@ -8,7 +8,7 @@ export const getGeoStateSelector = (state: IStoreState): GeoIdsState => get(stat
 
 export const getGeoIdsSelector = createSelector(getGeoStateSelector, (state) => state.ids);
 
-export const getStartDateSelector = createSelector(getGeoStateSelector, (state) => state.startDate);
+export const getStartDateSelector = createSelector(getGeoStateSelector, (state) => state.startDate || 1607000000000);
 
 export const getEndDateSelector = createSelector(getGeoStateSelector, (state) => state.endDate);
 

@@ -79,8 +79,8 @@ export const geoIds = (state: GeoIdsState = initialState, action: GeoIdActions) 
           ...state.geoData,
           [geoId]: {
             firstRecordDate: get(state, `geoData.${geoId}.firstRecordDate`),
-            firstDate: tracks[0].startDate,
-            lastDate: tracks[tracks.length - 1].endDate,
+            firstDate: get(tracks, '0.startDate'),
+            lastDate: get(tracks, `${tracks.length - 1}.endDate`),
             tracksCount: tracks.length,
             tracks,
           },

@@ -44,7 +44,7 @@ export const TrackList: FunctionComponent<ITrackListProps> = ({
               } ${getText('m')}`
             : `${track.pathLength % 1000} ${getText('m')}`;
         return (
-          <>
+          <div key={`track_${index}`}>
             {spanText && (
               <span key={`date_${index}`} className={'accordion-content__date'}>
                 {spanText}
@@ -62,7 +62,7 @@ export const TrackList: FunctionComponent<ITrackListProps> = ({
               </span>
               <span className={'accordion-content__item no-underline'}>{track.pathLength>0 ? distance: ''}</span>
             </div>
-          </>
+          </div>
         );
       })}
     </Accordion.Content>
