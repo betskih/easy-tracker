@@ -1,7 +1,7 @@
-import { takeEvery, put, select, delay, all } from 'redux-saga/effects';
+import { takeEvery, put, select, delay, all, fork } from 'redux-saga/effects';
 import { success } from 'redux-saga-requests';
 import { map } from 'lodash';
-import {FETCH_GEO_DATA_BY_ID, fetchGeoData, updateGeoData} from '../requests/actions';
+import { FETCH_GEO_DATA_BY_ID, fetchGeoData, updateGeoData } from '../requests/actions';
 import {
   ADD_NEW_GEO_ID,
   fetchFirstRecordDate,
@@ -10,7 +10,12 @@ import {
   OPEN_CLOSE_GEO_ID,
   replaceGeoData,
 } from './actions';
-import { getEndDateSelector, getGeoIdsSelector, getStartDateSelector } from './selector';
+import {
+  getEndDateSelector,
+  getGeoIdsSelector,
+  getStartDateSelector,
+  getUpdateDatesSelector,
+} from './selector';
 
 import dayjs = require('dayjs');
 import { createTracksData } from './utils';
@@ -19,17 +24,16 @@ const UPDATE_TIME = 15 * 1000;
 
 function* handleCheckUpdates() {
   while (true) {
-    const ids = yield select(getGeoIdsSelector);
-    const startDate = yield select(getStartDateSelector) || 1607000000000;
-    const endDate = yield select(getEndDateSelector) || dayjs().valueOf();
+    const ids = yield select(getUpdateDatesSelector);
+    const endDate = yield select(getEndDateSelector);
     yield all(
       map(ids, (value) => {
-        if (value.isOpened) {
+        if (endDate >= value.lastDate) {
           return put(
             updateGeoData({
               geoId: value.id,
-              startDate: dayjs(startDate).valueOf(),
-              endDate: dayjs(endDate).valueOf(),
+              startDate: value.lastDate,
+              endDate: endDate,
             }),
           );
         }
@@ -60,8 +64,8 @@ function* hanldeOpenCloseAccordion(action: IOpenCloseGeoId) {
     yield put(
       fetchGeoData({
         geoId,
-        startDate: dayjs(startDate).valueOf(),
-        endDate: dayjs(endDate).valueOf(),
+        startDate: startDate,
+        endDate: endDate,
       }),
     );
   }
@@ -71,5 +75,5 @@ export function* geoSaga() {
   yield takeEvery(ADD_NEW_GEO_ID, handleFetchFirstData);
   yield takeEvery(OPEN_CLOSE_GEO_ID, hanldeOpenCloseAccordion);
   yield takeEvery(success(FETCH_GEO_DATA_BY_ID), handleParseGeoData);
-  // yield fork(handleCheckUpdates);
+  yield fork(handleCheckUpdates);
 }

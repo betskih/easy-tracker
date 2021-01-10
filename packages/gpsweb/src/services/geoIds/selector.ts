@@ -1,5 +1,6 @@
-import { get } from 'lodash';
+import { get, map, forEach } from 'lodash';
 import { createSelector } from 'reselect';
+import dayjs from 'dayjs';
 import { IStoreState } from '../../app/root-reducer';
 import { SensorTrackData } from '../api/GeoTrack';
 import { GeoIdsState, SingleTrackData } from './types';
@@ -8,9 +9,15 @@ export const getGeoStateSelector = (state: IStoreState): GeoIdsState => get(stat
 
 export const getGeoIdsSelector = createSelector(getGeoStateSelector, (state) => state.ids);
 
-export const getStartDateSelector = createSelector(getGeoStateSelector, (state) => state.startDate || 1607000000000);
+export const getStartDateSelector = createSelector(
+  getGeoStateSelector,
+  (state) => state.startDate || 1607000000000,
+);
 
-export const getEndDateSelector = createSelector(getGeoStateSelector, (state) => state.endDate);
+export const getEndDateSelector = createSelector(
+  getGeoStateSelector,
+  (state) => state.endDate || dayjs().valueOf(),
+);
 
 export const getGeoDataSelector = createSelector(getGeoStateSelector, (state) => state.geoData);
 
@@ -19,6 +26,12 @@ export const getTrackListSelector = (geoId: string) =>
     getGeoDataSelector,
     (state) => get(state, `${geoId}.tracks`, []) as SingleTrackData[],
   );
+
+export const getTracksLastDateSelector = createSelector(getGeoDataSelector, (state) =>
+  map(state, (geoState, key) => {
+    return { id: key, lastDate: get(geoState, 'lastDate', 1607000000000) };
+  }),
+);
 
 export const getMapViewParams = createSelector(getGeoStateSelector, (state) => state.view);
 
@@ -31,5 +44,20 @@ export const getYandexTrack = createSelector(
       return track.map((item: SensorTrackData) => [item.latitude, item.longitude]);
     }
     return [];
+  },
+);
+
+export const getUpdateDatesSelector = createSelector(
+  getGeoIdsSelector,
+  getTracksLastDateSelector,
+  (ids, lastDates) => {
+    const result: {id: string, lastDate: number}[] = [];
+    forEach(ids, (value) => {
+      if (value.isOpened) {
+        const geoItem = lastDates.find((item) => item.id === value.id);
+        result.push({ id: value.id, lastDate: get(geoItem, 'lastDate', 0) + 1 });
+      }
+    });
+    return result;
   },
 );
