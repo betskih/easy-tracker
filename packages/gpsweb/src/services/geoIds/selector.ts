@@ -5,20 +5,24 @@ import { IStoreState } from '../../app/root-reducer';
 import { SensorTrackData } from '../api/GeoTrack';
 import { GeoIdsState, SingleTrackData } from './types';
 
+const EPOCH_START = 1607000000000;
+
 export const getGeoStateSelector = (state: IStoreState): GeoIdsState => get(state, 'geoIds');
 
 export const getGeoIdsSelector = createSelector(getGeoStateSelector, (state) => state.ids);
 
-export const getStartDateSelector = createSelector(
-  getGeoStateSelector,
-  (state) => (state.startDate && state.startDate > 1607000000000) || 1607000000000,
-);
+export const getStartDateSelector = createSelector(getGeoStateSelector, (state) => {
+  if (!state.startDate) {
+    return EPOCH_START;
+  }
+  return state.startDate >= EPOCH_START ? state.startDate : EPOCH_START;
+});
 
 export const getEndDateSelector = createSelector(getGeoStateSelector, (state) => {
   if (!state.endDate) {
     return dayjs().valueOf();
   }
-  return state.endDate < 1607000000001 ? 1607000000001 : state.endDate;
+  return state.endDate < EPOCH_START+1 ? EPOCH_START+1 : state.endDate;
 });
 
 export const getGeoDataSelector = createSelector(getGeoStateSelector, (state) => state.geoData);
@@ -34,7 +38,7 @@ export const getLastTrack = (geoId: string) =>
 
 export const getTracksLastDateSelector = createSelector(getGeoDataSelector, (state) =>
   map(state, (geoState, key) => {
-    return { id: key, lastDate: get(geoState, 'lastDate', 1607000000000) };
+    return { id: key, lastDate: get(geoState, 'lastDate', EPOCH_START) };
   }),
 );
 
