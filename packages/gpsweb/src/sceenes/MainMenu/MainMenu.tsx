@@ -85,12 +85,14 @@ export const MainMenu: FunctionComponent<IMainMenuProps> = () => {
           dateFormat={DATE_FORMAT}
           selected={startDate}
           onChange={onSetStartDate}
+          maxDate={endDate}
         />
         <DatePicker
           locale={LOCAL_ZONE}
           dateFormat={DATE_FORMAT}
           selected={endDate}
           onChange={onSetEndDate}
+          minDate={startDate}
         />
       </div>
 

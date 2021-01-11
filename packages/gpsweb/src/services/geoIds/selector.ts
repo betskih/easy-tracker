@@ -11,13 +11,15 @@ export const getGeoIdsSelector = createSelector(getGeoStateSelector, (state) => 
 
 export const getStartDateSelector = createSelector(
   getGeoStateSelector,
-  (state) => state.startDate || 1607000000000,
+  (state) => (state.startDate && state.startDate > 1607000000000) || 1607000000000,
 );
 
-export const getEndDateSelector = createSelector(
-  getGeoStateSelector,
-  (state) => state.endDate || dayjs().valueOf(),
-);
+export const getEndDateSelector = createSelector(getGeoStateSelector, (state) => {
+  if (!state.endDate) {
+    return dayjs().valueOf();
+  }
+  return state.endDate < 1607000000001 ? 1607000000001 : state.endDate;
+});
 
 export const getGeoDataSelector = createSelector(getGeoStateSelector, (state) => state.geoData);
 
