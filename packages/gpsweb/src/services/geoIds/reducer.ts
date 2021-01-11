@@ -7,6 +7,7 @@ import {
   GeoIdActions,
   OPEN_CLOSE_GEO_ID,
   REPLACE_GEO_DATA,
+  REPLACE_LAST_GEO_DATA,
   SET_END_DATE,
   SET_MAP_VIEW_PARAMS,
   SET_START_DATE,
@@ -87,6 +88,28 @@ export const geoIds = (state: GeoIdsState = initialState, action: GeoIdActions) 
         },
       };
     }
+    case REPLACE_LAST_GEO_DATA: {
+      const { geoId, tracks } = action.payload;
+      const stateTracks = [...get(state, `geoData.${geoId}.tracks`, [])];
+      if (stateTracks.length > 0) {
+        stateTracks.pop();
+      }
+      const newTracks = [...stateTracks, ...tracks];
+      return {
+        ...state,
+        geoData: {
+          ...state.geoData,
+          [geoId]: {
+            firstRecordDate: get(state, `geoData.${geoId}.firstRecordDate`),
+            firstDate: get(newTracks, '0.startDate'),
+            lastDate: get(newTracks, `${newTracks.length - 1}.endDate`),
+            tracksCount: newTracks.length,
+            tracks: newTracks,
+          },
+        },
+      };
+    }
+
     case SET_MAP_VIEW_PARAMS:
       return {
         ...state,

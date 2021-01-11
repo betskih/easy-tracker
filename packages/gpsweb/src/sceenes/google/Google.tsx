@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { withGoogleMap, GoogleMap, Marker, Polyline } from 'react-google-maps';
 import { createScriptLoader } from '@bigcommerce/script-loader';
 
-const MapWithAMarker = withGoogleMap((props) => (
+const MapWithAMarker = withGoogleMap(() => (
   <GoogleMap defaultZoom={13} defaultCenter={{ lat: 56.8613653, lng: 53.2278155 }}>
     <Marker position={{ lat: 56.844, lng: 53.22 }} />
     <Polyline

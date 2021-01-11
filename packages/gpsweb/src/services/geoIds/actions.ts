@@ -4,11 +4,11 @@ import { FETCH_FIRST_GEO_RECORD_ENDPOINT } from '../api/endpoints';
 
 export const ADD_NEW_GEO_ID = 'ADD_NEW_GEO_ID';
 export const OPEN_CLOSE_GEO_ID = 'OPEN_CLOSE_GEO_ID';
-export const CHECK_GEO_UPDATES = 'CHECK_GEO_UPDATES';
 export const FETCH_FIRST_GEO_RECORD_DATE = 'FETCH_FIRST_GEO_RECORD_DATE';
 export const SET_START_DATE = 'SET_START_DATE';
 export const SET_END_DATE = 'SET_END_DATE';
 export const REPLACE_GEO_DATA = 'REPLACE_GEO_DATA';
+export const REPLACE_LAST_GEO_DATA = 'REPLACE_LAST_GEO_DATA';
 export const SET_MAP_VIEW_PARAMS = 'SET_MAP_VIEW_PARAMS';
 
 export interface IReplaceGeoData extends AnyAction {
@@ -23,6 +23,21 @@ export const replaceGeoData = ({
   tracks: any[];
 }): IReplaceGeoData => ({
   type: REPLACE_GEO_DATA,
+  payload: { geoId, tracks },
+});
+
+export interface IReplaceLastGeoData extends AnyAction {
+  type: typeof REPLACE_LAST_GEO_DATA;
+}
+
+export const replaceLastGeoData = ({
+  geoId,
+  tracks,
+}: {
+  geoId: string;
+  tracks: any[];
+}): IReplaceLastGeoData => ({
+  type: REPLACE_LAST_GEO_DATA,
   payload: { geoId, tracks },
 });
 
@@ -48,15 +63,6 @@ export const openCloseGeoId = ({
 }): IOpenCloseGeoId => ({
   type: OPEN_CLOSE_GEO_ID,
   payload: { geoId, isOpened },
-});
-
-export interface ICheckGeoUpdates extends AnyAction {
-  type: typeof CHECK_GEO_UPDATES;
-}
-
-export const checkGeoUpdates = (startDate: number, endDate: number): ICheckGeoUpdates => ({
-  type: CHECK_GEO_UPDATES,
-  payload: { startDate, endDate },
 });
 
 export interface IFetchFirstRecordDate extends IApiAction {
@@ -99,9 +105,9 @@ export const setMapViewParams = (payload: { geoId: string; index: number }): ISe
 export type GeoIdActions =
   | IAddGeoId
   | IOpenCloseGeoId
-  | ICheckGeoUpdates
   | IFetchFirstRecordDate
   | ISetStartDate
   | ISetEndDate
   | IReplaceGeoData
-  | ISetMapViewParams;
+  | ISetMapViewParams
+  | IReplaceLastGeoData;

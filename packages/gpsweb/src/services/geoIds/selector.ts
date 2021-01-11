@@ -1,4 +1,4 @@
-import { get, map, forEach } from 'lodash';
+import { get, map, forEach, last } from 'lodash';
 import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
 import { IStoreState } from '../../app/root-reducer';
@@ -27,6 +27,9 @@ export const getTrackListSelector = (geoId: string) =>
     (state) => get(state, `${geoId}.tracks`, []) as SingleTrackData[],
   );
 
+export const getLastTrack = (geoId: string) =>
+  createSelector(getTrackListSelector(geoId), (tracks) => get(last(tracks), 'data', []));
+
 export const getTracksLastDateSelector = createSelector(getGeoDataSelector, (state) =>
   map(state, (geoState, key) => {
     return { id: key, lastDate: get(geoState, 'lastDate', 1607000000000) };
@@ -51,7 +54,7 @@ export const getUpdateDatesSelector = createSelector(
   getGeoIdsSelector,
   getTracksLastDateSelector,
   (ids, lastDates) => {
-    const result: {id: string, lastDate: number}[] = [];
+    const result: { id: string; lastDate: number }[] = [];
     forEach(ids, (value) => {
       if (value.isOpened) {
         const geoItem = lastDates.find((item) => item.id === value.id);
