@@ -4,6 +4,7 @@ import {
   FETCH_AUTH_TOKENS,
   FETCH_GEO_ID,
   IAppActions,
+  REFRESH_TOKENS,
   SET_APP_STATE,
   SET_DEVICE_INFO,
 } from './actions';
@@ -22,6 +23,12 @@ export const initialState: IAppState = {
 export function app(state: IAppState = initialState, action: IAppActions) {
   const responce = get(action, 'data.data', {});
   switch (action.type) {
+    case success(REFRESH_TOKENS):
+      return {
+        ...state,
+        token: responce.token,
+        refreshToken: responce.refreshToken,
+      };
     case SET_APP_STATE:
       return {
         ...state,

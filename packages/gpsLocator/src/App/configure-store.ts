@@ -31,12 +31,12 @@ const persistConfig = {
   migrate,
   stateReconciler: hardSet,
   transforms: [
-    // omitFlags(['pending']),
     predefineNestedProperties({
       app: [
         { path: 'isModalOpen', value: false },
         { path: 'appStatus', value: APP_STATUS.STARTED },
       ],
+      geo: [{ path: 'pending', value: 0 }],
     }),
   ],
 };
