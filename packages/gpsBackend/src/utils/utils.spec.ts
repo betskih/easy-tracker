@@ -18,4 +18,3 @@ describe('test distance function', () => {
     expect(Math.round(res / 1000)).toEqual(5163);
   });
 });
-

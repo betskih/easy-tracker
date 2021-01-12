@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import Joi from 'joi';
-import { sequelize } from './dbTypes';
+import sequelize from './dbTypes';
 import { MobileUser, Users } from './UserTypes';
 
 export interface GeoDataDto extends Model {
@@ -37,6 +37,11 @@ export const postGeoDataSchema = Joi.object().keys({
       }),
     )
     .required(),
+});
+
+export const putPasswordSchema = Joi.object().keys({
+  geoId: Joi.string().min(9).max(9).required(),
+  password: Joi.string().min(0).max(60).required(),
 });
 
 export const GeoData = sequelize.define<MobileUser>(

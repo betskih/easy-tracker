@@ -6,7 +6,7 @@ import cors from 'cors';
 import router from './routers/routers';
 import login from './routers/login';
 import { errorLoggerMiddleware, logger } from './middlewares/middlewares';
-import { sequelize } from './models/dbTypes';
+import sequelize from './models/dbTypes';
 import webRouter from './routers/web_router';
 
 const accessLog = fs.createWriteStream('log/access.log', { flags: 'a' });

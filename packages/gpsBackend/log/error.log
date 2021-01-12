@@ -24734,3 +24734,23 @@
 2021-01-09T18:22:00+04:00 [checkToken] error: Failed to authenticate token. 
 2021-01-09T18:22:07+04:00 [checkToken] error: Failed to authenticate token. 
 2021-01-09T18:31:45+04:00 [checkToken] error: Failed to authenticate token. 
+2021-01-11T14:19:39+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:19:55+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:20:11+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:20:27+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:23:07+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:23:23+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:24:26+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:24:42+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:24:57+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:25:13+04:00 [ErrorHandler] error: Unknown server error [object Object]
+2021-01-11T14:28:07+04:00 [geoTrack] error: "startDate" must be larger than or equal to 1607000000000 {"geoId":"532367811","startDate":1606766400000,"endDate":1610360887096}
+2021-01-11T14:28:09+04:00 [geoTrack] error: "startDate" must be larger than or equal to 1607000000000 {"geoId":"532367811","startDate":1606766400000,"endDate":1610360889456}
+2021-01-11T14:38:59+04:00 [geoTrack] error: "endDate" must be larger than or equal to 1607000000000 {"geoId":"532367811","startDate":1607000000000,"endDate":1606852799999}
+2021-01-11T14:49:59+04:00 [geoTrack] error: "startDate" must be a number {"geoId":"532367811","startDate":true,"endDate":1607457599999}
+2021-01-11T14:50:08+04:00 [geoTrack] error: "startDate" must be a number {"geoId":"532367811","startDate":true,"endDate":1610481599999}
+2021-01-12T07:52:36+04:00 [checkToken] error: Failed to authenticate token. 
+2021-01-12T07:53:03+04:00 [checkToken] error: Failed to authenticate token. 
+2021-01-12T07:53:18+04:00 [checkToken] error: Failed to authenticate token. 
+2021-01-12T07:54:20+04:00 [checkToken] error: Failed to authenticate token. 
+2021-01-12T07:55:16+04:00 [checkToken] error: Failed to authenticate token. 

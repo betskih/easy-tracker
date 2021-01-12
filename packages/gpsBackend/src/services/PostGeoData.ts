@@ -1,8 +1,8 @@
-import { GeoData, GeoDataDto, postGeoDataSchema } from '../models/GeoTypes';
 import { get } from 'lodash';
+import { GeoData, GeoDataDto, postGeoDataSchema } from '../models/GeoTypes';
 import { logger } from '../middlewares/middlewares';
 import { Users } from '../models/UserTypes';
-import { sequelize } from '../models/dbTypes';
+import sequelize from '../models/dbTypes';
 
 const postGeoData = async (req, res) => {
   const validation = postGeoDataSchema.validate(req.body);

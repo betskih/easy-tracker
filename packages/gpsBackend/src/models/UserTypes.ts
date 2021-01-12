@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from './dbTypes';
+import sequelize from './dbTypes';
 
 export interface MobileUser extends Model {
   id: string;

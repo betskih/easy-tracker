@@ -89,3 +89,14 @@ response (jsend):
    geoId: string,
    firstRecordDate: number,
 }
+---------------------------
+PUT /api/password
+body JSON:
+{
+    "geoId": string,
+    "password": string [0-60]
+}
+response (jsend): 
+{
+   geoId: string,
+}

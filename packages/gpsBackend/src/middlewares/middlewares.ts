@@ -24,6 +24,7 @@ export const logger = winston.createLogger({
   ],
 });
 
+// eslint-disable-next-line no-unused-vars
 export const errorLoggerMiddleware = (err, req, res, next) => {
   const msg = 'Unknown server error';
   logger.log({
