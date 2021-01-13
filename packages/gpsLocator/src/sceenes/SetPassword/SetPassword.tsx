@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 interface ISetPasswordProps {
   id: string;
 }
 
-const SetPassword: FunctionComponent<ISetPasswordProps> = ({ id }) => {
+export const SetPassword: FunctionComponent<ISetPasswordProps> = ({ id }) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -23,5 +23,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ location }: { location: any }) => location.payload;
-export default connect(mapStateToProps)(SetPassword);
+// const mapStateToProps = ({ location }: { location: any }) => location.payload;
+// export default connect(mapStateToProps)(SetPassword);
