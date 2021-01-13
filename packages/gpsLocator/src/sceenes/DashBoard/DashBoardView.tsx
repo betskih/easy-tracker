@@ -1,36 +1,43 @@
 import React, { FunctionComponent } from 'react';
-import { SafeAreaView, ScrollView, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { getApiURL } from '../../utilities/config';
+import { getText } from '../../constants/constants';
+import { UserPhoto } from './components/UserPhoto';
 
 interface IDashboardViewProps {
   onPress: () => void;
   isRecording: boolean;
   items: { time: string; latitude: number; longitude: number; speed: number | null }[];
-  geoId: string;
+  onShowId: () => void;
 }
 export const DashboardView: FunctionComponent<IDashboardViewProps> = ({
   onPress = () => {},
   isRecording,
+  onShowId,
   items,
-  geoId,
 }) => {
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <TouchableOpacity onPress={onPress}>
-          <View
-            style={{ backgroundColor: isRecording ? 'red' : 'blue', height: 100, width: 200 }}
-          />
-        </TouchableOpacity>
-        <Text>{geoId}</Text>
+        <UserPhoto style={styles.image} />
+        <View style={styles.nameBlock}>
+          <Text style={styles.nameText} ellipsizeMode={'tail'} numberOfLines={1}>
+            {'Bear Grills'}
+          </Text>
+          <TouchableOpacity style={styles.showId} onPress={onShowId}>
+            <Text style={styles.showIdText}>{getText('pressToShow')}</Text>
+          </TouchableOpacity>
+          <Text>{`API URL: ${getApiURL()}`}</Text>
+        </View>
       </View>
-      <View style={{ height: '80%', width: '100%', marginTop: 20 }}>
-        <ScrollView>
-          <Text>{getApiURL()}</Text>
-          {items.map((item, index) => (
-            <Text key={index} children={`${item.time} - ${item.latitude} | ${item.longitude}`} />
-          ))}
-        </ScrollView>
+      <View style={styles.infoContainer}>
+        <View style={{ height: '50%' }} />
+        <TouchableOpacity
+          onPress={onPress}
+          style={[{ backgroundColor: isRecording ? '#B91C1C' : '#2F80ED' }, styles.button]}
+        >
+          <Text style={styles.buttonText}>{getText(isRecording ? 'endLog' : 'startLog')}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -38,4 +45,48 @@ export const DashboardView: FunctionComponent<IDashboardViewProps> = ({
 
 const styles = StyleSheet.create({
   header: { flexDirection: 'row' },
+  image: { marginTop: 23, marginLeft: 32 },
+  nameBlock: { flexDirection: 'column', marginTop: 20, marginLeft: 26, marginRight: 10, flex: 1 },
+  nameText: {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 24,
+    lineHeight: 30,
+    color: 'black',
+    marginRight: 0,
+  },
+  showId: {
+    backgroundColor: '#E0E0E0',
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  showIdText: {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    lineHeight: 19,
+    color: '#828282',
+  },
+  infoContainer: {
+    marginLeft: 10,
+    marginRight: 10,
+    flexDirection: 'column',
+  },
+  button: {
+    height: 190,
+    marginRight: 30,
+    marginBottom: 50,
+    marginLeft: 30,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 24,
+    lineHeight: 33,
+    color: 'white',
+  },
 });

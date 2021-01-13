@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import { setNewLocation } from '../../services/geo/actions';
 import { getLastArrayList } from '../../services/geo/selector';
-import { getGeoIdSelector } from '../../App/selectors';
 import { DashboardView } from './DashBoardView';
 
 const UPDATE_LOCATION_INTERVAL = 10000;
@@ -23,7 +22,10 @@ export const Dashboard: FunctionComponent = () => {
   const [isRecording, setRecord] = useState(false);
   const [watch, setWatch] = useState(-1);
   const items = useSelector(getLastArrayList);
-  const geoId = useSelector(getGeoIdSelector);
+  // const geoId = useSelector(getGeoIdSelector);
+  const onShowId = useCallback(() => {
+    dispatch({ type: 'SET_PASSWORD', payload: { id: '234' } });
+  }, [dispatch]);
   const onPressButton = useCallback(() => {
     if (isRecording) {
       Geolocation.clearWatch(watch);
@@ -49,6 +51,11 @@ export const Dashboard: FunctionComponent = () => {
     setRecord(!isRecording);
   }, [isRecording, dispatch, watch]);
   return (
-    <DashboardView onPress={onPressButton} isRecording={isRecording} items={items} geoId={geoId} />
+    <DashboardView
+      onPress={onPressButton}
+      isRecording={isRecording}
+      items={items}
+      onShowId={onShowId}
+    />
   );
 };

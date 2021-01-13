@@ -2,8 +2,10 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import { AppRegistry, Linking } from 'react-native';
+import { push } from 'redux-first-router';
 import App from './src/App/App';
-import {name as appName} from './app.json';
+import { name as appName } from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+Linking.getInitialURL().then(AppRegistry.registerComponent(appName, () => App));
+Linking.addEventListener('url', ({ url }) => push(url));

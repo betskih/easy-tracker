@@ -59,7 +59,7 @@ export function geo(state: IGeoState = initialState, action: IGeoAction) {
           ...state,
           [state.firstIndex]: reduce(
             branch,
-            (result, value, key) => {
+            (result: any, value, key) => {
               if (key >= count) {
                 result.push(value);
               }
