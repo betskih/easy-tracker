@@ -19,7 +19,7 @@ export const initialState: IGeoState = {
   0: [],
 };
 
-export function geo(state: IGeoState = initialState, action: IGeoAction) {
+export function geo(state: IGeoState = initialState, action: IGeoAction): IGeoState {
   switch (action.type) {
     case SET_NEW_LOCATION:
       const current = state.lastAmount >= 200 ? state.lastIndex + 1 : state.lastIndex;
@@ -52,7 +52,7 @@ export function geo(state: IGeoState = initialState, action: IGeoAction) {
             ),
             firstIndex: state.firstIndex + 1,
             pending: 0,
-          };
+          } as IGeoState;
         }
       } else {
         return {

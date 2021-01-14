@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
-// import { connect } from 'react-redux';
+import { StyleSheet, View, Text } from 'react-native';
 
 interface ISetPasswordProps {
   id: string;
@@ -8,18 +7,31 @@ interface ISetPasswordProps {
 
 export const SetPassword: FunctionComponent<ISetPasswordProps> = ({ id }) => {
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.content}>
         <Text>{id}</Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
-    width: '100%',
-    height: '100%',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+  },
+  content: {
+    width: '70%',
+    height: '40%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

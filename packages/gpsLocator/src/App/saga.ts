@@ -2,7 +2,6 @@ import { takeEvery, select, put, fork, delay } from 'redux-saga/effects';
 
 import { getUniqueId } from 'react-native-device-info';
 import { error } from 'redux-saga-requests';
-import { back, replace } from '../navigation/NavigationService';
 import { getFirstArray, getGeoPending } from '../services/geo/selector';
 import { sendGeoData } from '../services/geo/actions';
 import {
@@ -25,14 +24,6 @@ import {
 import { APP_STATUS } from './types';
 
 export const BACKEND_CHECK_INTERVAL = 15 * 1000;
-
-export function* onReplaceRoute(action: IAppRoute) {
-  const { route, params } = action;
-  replace(route, params);
-}
-export function* backRoute() {
-  back();
-}
 
 export function* initializeApp() {
   const uid = getUniqueId();
@@ -75,7 +66,5 @@ export function* appSaga() {
     yield fork(initializeApp);
   }
   yield fork(backendEventLoop);
-  yield takeEvery(REPLACE_ROUTE, onReplaceRoute);
-  yield takeEvery(BACK_ROUTE, backRoute);
   yield takeEvery(error(REFRESH_TOKENS), relogin);
 }

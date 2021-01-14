@@ -2,8 +2,11 @@ import React, { FunctionComponent, useCallback, useState } from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from 'dayjs';
+import { Actions } from 'react-native-router-flux';
 import { setNewLocation } from '../../services/geo/actions';
 import { getLastArrayList } from '../../services/geo/selector';
+import { getGeoIdSelector } from '../../App/selectors';
+import { ROUTES } from '../../navigation/RootRouter';
 import { DashboardView } from './DashBoardView';
 
 const UPDATE_LOCATION_INTERVAL = 10000;
@@ -22,10 +25,10 @@ export const Dashboard: FunctionComponent = () => {
   const [isRecording, setRecord] = useState(false);
   const [watch, setWatch] = useState(-1);
   const items = useSelector(getLastArrayList);
-  // const geoId = useSelector(getGeoIdSelector);
+  const geoId = useSelector(getGeoIdSelector);
   const onShowId = useCallback(() => {
-    dispatch({ type: 'SET_PASSWORD', payload: { id: '234' } });
-  }, [dispatch]);
+    Actions[ROUTES.password]({ id: geoId });
+  }, [geoId]);
   const onPressButton = useCallback(() => {
     if (isRecording) {
       Geolocation.clearWatch(watch);
