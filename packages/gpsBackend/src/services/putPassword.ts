@@ -1,13 +1,13 @@
-import { putPasswordSchema } from '../models/GeoTypes';
 import { get } from 'lodash';
+import { putPasswordSchema } from '../models/GeoTypes';
 import { logger } from '../middlewares/middlewares';
 import { Users } from '../models/UserTypes';
 
 const putPassword = async (req, res) => {
   const validation = putPasswordSchema.validate(req.body);
   const geoId = get(req, 'body.geoId', '');
-  if (validation.error || req.tokenId !== geoId) {
-    const { message } = validation.error;
+  if (validation.error) {
+    const message = get(validation, 'error.message', 'Validation error');
     logger.log({
       level: 'error',
       message,

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r dotenv/config src/index.ts dotenv_config_path=.env",
+    "start:unix": "cross-env ENVFILE=.env.dev nodemon src/index.ts",
     "lint:fix": "eslint ./src --ext .ts --ext .tsx --ext .js --fix",
     "test": "jest"
   },

@@ -41,7 +41,8 @@ export const postGeoDataSchema = Joi.object().keys({
 
 export const putPasswordSchema = Joi.object().keys({
   geoId: Joi.string().min(9).max(9).required(),
-  password: Joi.string().min(0).max(60).required(),
+  password: Joi.string().allow('').min(0).max(60)
+    .required(),
 });
 
 export const GeoData = sequelize.define<MobileUser>(
