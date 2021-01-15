@@ -24,6 +24,10 @@ export const getGeoIdSelector = createSelector(appSelector, (state) => {
   return get(state, 'geoId', '');
 });
 
+export const isPasswordSetSelector = createSelector(appSelector, (state) => {
+  return get(state, 'passwordSet', '');
+});
+
 export const getUserIdSelector = createSelector(appSelector, (state) => {
   return get(state, 'userId', '');
 });

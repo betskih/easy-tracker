@@ -25,10 +25,9 @@ export const Dashboard: FunctionComponent = () => {
   const [isRecording, setRecord] = useState(false);
   const [watch, setWatch] = useState(-1);
   const items = useSelector(getLastArrayList);
-  const geoId = useSelector(getGeoIdSelector);
   const onShowId = useCallback(() => {
-    Actions[ROUTES.password]({ id: geoId });
-  }, [geoId]);
+    Actions[ROUTES.password]();
+  }, []);
   const onPressButton = useCallback(() => {
     if (isRecording) {
       Geolocation.clearWatch(watch);

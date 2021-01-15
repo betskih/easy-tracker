@@ -19,6 +19,7 @@ export interface IAppState {
   appState: APP_STATUS;
   userId: string;
   geoId: string;
+  passwordSet: boolean | undefined;
   token: string;
   refreshToken: string;
   isModalOpen: boolean;

@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { get } from 'lodash';
-import { RequestAction } from 'redux-saga-requests';
-import { put, select } from 'redux-saga/effects';
+import { abort, RequestAction, error as sagaError, success } from 'redux-saga-requests';
+import { put, select, take } from 'redux-saga/effects';
 
 import { IApiRequest } from '../services/redux/ApiAction';
 import { LogLevel } from './types';
@@ -55,6 +55,8 @@ export function* onError(error: any, action: RequestAction): any {
   if (status === 403) {
     if (actionType !== REFRESH_TOKENS) {
       yield put(refreshTokens());
+      yield take([success(REFRESH_TOKENS), sagaError(REFRESH_TOKENS), abort(REFRESH_TOKENS)]);
+      return yield put(action);
     }
   } else if (status === 422) {
     // should be handled in reducer

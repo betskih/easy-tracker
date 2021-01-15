@@ -1,19 +1,11 @@
 import { takeEvery, select, put, fork, delay } from 'redux-saga/effects';
 
 import { getUniqueId } from 'react-native-device-info';
-import { error } from 'redux-saga-requests';
+import { error, success } from 'redux-saga-requests';
+import { Actions } from 'react-native-router-flux';
 import { getFirstArray, getGeoPending } from '../services/geo/selector';
-import { sendGeoData } from '../services/geo/actions';
-import {
-  BACK_ROUTE,
-  fetchAuthTokens,
-  fetchGeoId,
-  IAppRoute,
-  REFRESH_TOKENS,
-  REPLACE_ROUTE,
-  setAppState,
-  setDeviceInfo,
-} from './actions';
+import { sendGeoData, SET_NEW_PASSWORD } from '../services/geo/actions';
+import { fetchAuthTokens, fetchGeoId, REFRESH_TOKENS, setAppState, setDeviceInfo } from './actions';
 import {
   appStatusSelector,
   getDeviceIdSelector,
@@ -59,6 +51,11 @@ function* relogin() {
   const deviceId = yield select(getDeviceIdSelector);
   yield put(fetchAuthTokens(deviceId));
 }
+function* handleChangePassword() {
+  const userId = yield select(getUserIdSelector);
+  yield put(fetchGeoId(userId));
+  Actions.pop();
+}
 
 export function* appSaga() {
   const appState = yield select(appStatusSelector);
@@ -67,4 +64,5 @@ export function* appSaga() {
   }
   yield fork(backendEventLoop);
   yield takeEvery(error(REFRESH_TOKENS), relogin);
+  yield takeEvery(success(SET_NEW_PASSWORD), handleChangePassword);
 }

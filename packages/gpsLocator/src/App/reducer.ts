@@ -15,6 +15,7 @@ export const initialState: IAppState = {
   appState: APP_STATUS.STARTED,
   userId: '',
   geoId: '',
+  passwordSet: undefined,
   token: '',
   refreshToken: '',
   isModalOpen: false,
@@ -50,6 +51,7 @@ export function app(state: IAppState = initialState, action: IAppActions) {
       return {
         ...state,
         geoId: responce.geoId,
+        passwordSet: responce.passwordSet,
       };
     default:
       return state;
