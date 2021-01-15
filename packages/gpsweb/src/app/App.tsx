@@ -1,18 +1,21 @@
 import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
-import { MainScreen } from '../sceenes/MainScreen/MainScreen';
+import { BrowserRouter } from 'react-router-dom';
+import 'antd/dist/antd.css';
+
+import { AppContainer } from '../sceenes/MainScreen/AppContainer';
 import { ErrorBoundary } from './ErrorBoundary';
 import { configureStore } from './store-config';
 
-interface IApp {}
-
-export const App: FunctionComponent<IApp> = () => {
+export const App: FunctionComponent<{}> = () => {
   return (
-    <ErrorBoundary>
-      <Provider store={configureStore()}>
-        <MainScreen />
-      </Provider>
-    </ErrorBoundary>
+    <BrowserRouter>
+      <ErrorBoundary>
+        <Provider store={configureStore()}>
+          <AppContainer />
+        </Provider>
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 };
 
