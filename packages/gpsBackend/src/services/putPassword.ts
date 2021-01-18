@@ -19,8 +19,9 @@ const putPassword = async (req, res) => {
     });
     return;
   }
+  const id = req.tokenId;
   const password = get(req, 'body.password', '');
-  const dbResponse = await Users.update({ password }, { where: { geoId } });
+  const dbResponse = await Users.update({ password }, { where: { geoId, id } });
   const response = get(dbResponse, '0', 0);
   if (response !== 1) {
     const message = 'Change password error';
