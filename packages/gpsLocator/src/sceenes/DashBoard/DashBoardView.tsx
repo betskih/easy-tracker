@@ -18,20 +18,20 @@ export const DashboardView: FunctionComponent<IDashboardViewProps> = ({
 }) => {
   return (
     <SafeAreaView>
-      <View style={styles.header}>
-        <UserPhoto style={styles.image} />
-        <View style={styles.nameBlock}>
-          <Text style={styles.nameText} ellipsizeMode={'tail'} numberOfLines={1}>
-            {'Bear Grills'}
-          </Text>
-          <TouchableOpacity style={styles.showId} onPress={onShowId}>
-            <Text style={styles.showIdText}>{getText('pressToShow')}</Text>
-          </TouchableOpacity>
-          <Text>{`API URL: ${getApiURL()}`}</Text>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <UserPhoto style={styles.image} />
+          <View style={styles.nameBlock}>
+            <Text style={styles.nameText} ellipsizeMode={'tail'} numberOfLines={1}>
+              {'Bear Grills'}
+            </Text>
+            <TouchableOpacity style={styles.showId} onPress={onShowId}>
+              <Text style={styles.showIdText}>{getText('pressToShow')}</Text>
+            </TouchableOpacity>
+            <Text>{`API URL: ${getApiURL()}`}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.infoContainer}>
-        <View style={{ height: '50%' }} />
+        <View style={styles.infoContainer}></View>
         <TouchableOpacity
           onPress={onPress}
           style={[{ backgroundColor: isRecording ? '#B91C1C' : '#2F80ED' }, styles.button]}
@@ -44,6 +44,11 @@ export const DashboardView: FunctionComponent<IDashboardViewProps> = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%',
+  },
   header: { flexDirection: 'row' },
   image: { marginTop: 23, marginLeft: 32 },
   nameBlock: { flexDirection: 'column', marginTop: 20, marginLeft: 26, marginRight: 10, flex: 1 },

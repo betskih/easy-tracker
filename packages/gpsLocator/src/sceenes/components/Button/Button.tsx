@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
   },
   blue: {
     backgroundColor: '#2F80ED',
-    width: 136,
-    height: 47,
+    width: '45%',
+    height: 44,
   },
   red: {
     backgroundColor: '#B91C1C',
-    width: 136,
+    width: '45%',
     height: 44,
   },
   disabled: {
