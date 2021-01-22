@@ -1,0 +1,25 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "publish": "lerna publish",
+    "start": "lerna run start --parallel"
+  },
+  "devDependencies": {
+    "husky": "4.3.7",
+    "lerna": "3.22.1",
+    "lint-staged": "10.5.3",
+    "prettier": "2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/**/src/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  }
+}
