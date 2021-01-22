@@ -7,7 +7,7 @@
   "scripts": {
     "lint:fix": "eslint ./src --ext .ts --ext .tsx --ext .js --fix",
     "build-prod": "webpack --config webpack.prod.js",
-    "start-dev": "webpack-dev-server --open --config webpack.dev.js",
+    "start:win": "webpack-dev-server --open --config webpack.dev.js",
     "install:web": "npm i",
     "test": "jest ./src"
   },
