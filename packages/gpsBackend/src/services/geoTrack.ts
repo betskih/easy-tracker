@@ -1,25 +1,9 @@
 import { Op } from 'sequelize';
 import { get } from 'lodash';
-import { postGeoTrackSchema } from '../models/TrackTypes';
-import { logger } from '../middlewares/middlewares';
 import { GeoData } from '../models/GeoTypes';
 
-const geoTrack = async (req, res) => {
-  const validation = postGeoTrackSchema.validate(req.body);
+const geoTrack = async (req, res, next) => {
   const { geoId, startDate, endDate } = req.body;
-  if (validation.error) {
-    const { message } = validation.error;
-    logger.log({
-      level: 'error',
-      message,
-      label: 'geoTrack',
-      params: JSON.stringify({ geoId, startDate, endDate }),
-    });
-    res.status(400).jsend.error({
-      message,
-    });
-  }
-
   const dbResponse = await GeoData.findAll({
     attributes: ['timestamp', 'accuracy', 'altitude', 'heading', 'latitude', 'longitude', 'speed'],
     where: {
@@ -40,6 +24,10 @@ const geoTrack = async (req, res) => {
     const value = get(item, 'dataValues');
     return { ...value, timestamp: parseInt(value.timestamp, 10) };
   });
-  res.jsend.success({ geoId, track });
+  res.response = {
+    status: 200,
+    data: { geoId, track },
+  };
+  next();
 };
 export default geoTrack;

@@ -1,39 +1,27 @@
 import { get } from 'lodash';
-import { GeoData, GeoDataDto, postGeoDataSchema } from '../models/GeoTypes';
+import { GeoData, GeoDataDto } from '../models/GeoTypes';
 import { logger } from '../middlewares/middlewares';
 import { Users } from '../models/UserTypes';
 import sequelize from '../models/dbTypes';
 
-const postGeoData = async (req, res) => {
-  const validation = postGeoDataSchema.validate(req.body);
+const postGeoData = async (req, res, next) => {
   const geoId = get(req, 'body.geoId', '');
-  if (validation.error) {
-    const { message } = validation.error;
-    logger.log({
-      level: 'error',
-      message,
-      label: 'postGeoData',
-      params: JSON.stringify({ geoId }),
-    });
-    res.status(400).jsend.error({
-      message,
-    });
-    return;
-  }
-
   const dbResponse = await Users.findAll({ where: { id: req.tokenId } });
   const userGeoId = get(dbResponse, '0.dataValues.geoId', null);
   if (userGeoId !== geoId) {
     const authMessage = 'GeoId and token id mismatch.';
+    res.response = {
+      status: 403,
+      message: authMessage,
+    };
+
     logger.log({
       level: 'error',
       message: authMessage,
       label: 'postGeoData',
       params: JSON.stringify({ geoId }),
     });
-    res.status(403).jsend.error({
-      message: authMessage,
-    });
+    next();
   }
 
   const records: GeoDataDto[] = req.body.data.map((item) => ({
@@ -50,7 +38,11 @@ const postGeoData = async (req, res) => {
   try {
     sequelize.transaction((t1) => {
       t1.afterCommit(() => {
-        res.status(200).jsend.success({ inserted: records.length });
+        res.response = {
+          status: 200,
+          data: { inserted: records.length },
+        };
+        next();
       });
       return GeoData.bulkCreate(records, { transaction: t1 });
     });
@@ -62,7 +54,11 @@ const postGeoData = async (req, res) => {
       label: 'postGeoData',
       params: JSON.stringify({ geoId }),
     });
-    res.status(500).jsend.error({ message: msg });
+    res.response = {
+      status: 500,
+      message: msg,
+    };
+    next();
   }
 };
 export default postGeoData;

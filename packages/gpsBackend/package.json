@@ -1,5 +1,6 @@
 {
   "name": "nodejs",
+  "title": "GPS Locator API",
   "version": "1.0.0",
   "description": "NodeJS mentoring program",
   "main": "index.js",
@@ -54,6 +55,7 @@
     "express": "^4.17.1",
     "joi": "^17.1.1",
     "jsend": "^1.1.0",
+    "json-joi-converter": "^17.2.1-a",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.5",
     "lodash": "^4.17.19",
