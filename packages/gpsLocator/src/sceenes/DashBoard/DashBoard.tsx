@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import { Actions } from 'react-native-router-flux';
 import { setNewLocation } from '../../services/geo/actions';
 import { getLastArrayList } from '../../services/geo/selector';
-import { getGeoIdSelector } from '../../App/selectors';
 import { ROUTES } from '../../navigation/RootRouter';
 import { DashboardView } from './DashBoardView';
 

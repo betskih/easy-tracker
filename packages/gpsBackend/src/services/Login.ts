@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { get } from 'lodash';
 import dayjs = require('dayjs');
+// eslint-disable-next-line import/first
 import { Users } from '../models/UserTypes';
 
 const getNewGeoId = async () => {
