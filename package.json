@@ -4,9 +4,10 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "publish": "lerna publish",
-    "start:all": "lerna run start --parallel",
-    "start:win": "lerna run start:win",
-    "android": "lerna run android --stream"
+    "web:win": "lerna run start:win --stream",
+    "web:unix": "lerna run start:win --stream",
+    "android": "lerna run android --stream",
+    "lint:fix": "lerna run lint:fix --stream"
   },
   "devDependencies": {
     "husky": "4.3.7",

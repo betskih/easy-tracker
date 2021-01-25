@@ -31,7 +31,7 @@ export const DashboardView: FunctionComponent<IDashboardViewProps> = ({
             <Text>{`API URL: ${getApiURL()}`}</Text>
           </View>
         </View>
-        <View style={styles.infoContainer}></View>
+        <View style={styles.infoContainer} />
         <TouchableOpacity
           onPress={onPress}
           style={[{ backgroundColor: isRecording ? '#B91C1C' : '#2F80ED' }, styles.button]}

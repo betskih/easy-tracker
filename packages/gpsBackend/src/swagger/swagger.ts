@@ -4,9 +4,9 @@ import Joi, { JoiObject } from 'joi';
 import packageJson from '../../package.json';
 
 export enum Methods {
-  get = 'get',
-  post = 'post',
-  put = 'put',
+  GET = 'get',
+  POST = 'post',
+  PUT = 'put',
 }
 
 export enum ParameterLocation {
