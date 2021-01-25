@@ -5,6 +5,7 @@ import { Route, Switch, Redirect, Link } from 'react-router-dom';
 
 import { Yandex } from '../yandex/Yandex';
 import { MainMenu } from '../MainMenu/MainMenu';
+import {Login} from "../Login/Login";
 
 const { Header, Content, Footer } = Layout;
 
@@ -31,6 +32,7 @@ export const AppContainer: FunctionComponent<{}> = () => {
             {/* eslint-disable-next-line react/jsx-no-bind */}
             <Route exact path={'/'} render={() => <Redirect to={'/yandex'} />} />
             <Route path={'/yandex'} component={Yandex} />
+            <Route path={'/login'} component={Login} />
             {/* eslint-disable-next-line react/jsx-no-bind */}
             <Route path={'*'} render={() => <div>404 NOT FOUND</div>} />
           </Switch>

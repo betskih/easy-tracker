@@ -10,13 +10,16 @@ import { GeoInput } from '../components/GeoInput/GeoInput';
 import {
   addGeoIdAction,
   openCloseGeoId,
-  setEndDateAction, setMapViewParams,
+  setEndDateAction,
+  setMapViewParams,
   setStartDateAction,
 } from '../../services/geoIds/actions';
 import { getGeoIdsSelector } from '../../services/geoIds/selector';
 import { DATE_FORMAT, LOCAL_ZONE } from '../../Constants/constants';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TrackList } from '../components/TrackList/TrackList';
+import { Login } from '../Login/Login';
+import { Link } from 'react-router-dom';
 
 // dayjs.extend(utc);
 // dayjs.extend(timezone);
@@ -71,12 +74,20 @@ export const MainMenu: FunctionComponent<IMainMenuProps> = () => {
     [dispatch],
   );
 
-  const onTrackPress = useCallback((geoId)=>(index: number) => {
-    dispatch(setMapViewParams({ geoId, index}));
-  }, [dispatch]);
+  const onTrackPress = useCallback(
+    (geoId) => (index: number) => {
+      dispatch(setMapViewParams({ geoId, index }));
+    },
+    [dispatch],
+  );
 
   return (
     <div className={'container'}>
+      <div>
+      <Link to={'/login'}>
+        <span> Login </span>
+      </Link>
+      </div>
       <Button circular primary icon="plus" onClick={addGeoId} />
       {isModal && <GeoInput onClose={onClose} onAdd={onAdd} />}
       <div className={'calendar'}>
