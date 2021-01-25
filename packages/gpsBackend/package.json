@@ -1,7 +1,7 @@
 {
   "name": "nodejs",
   "title": "GPS Locator API",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "NodeJS mentoring program",
   "main": "index.js",
   "scripts": {
