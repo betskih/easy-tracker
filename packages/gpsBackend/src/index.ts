@@ -23,14 +23,15 @@ app.use(errorLoggerMiddleware);
 app.use('/api/', router);
 app.use('/login/', login);
 app.use('/web/', webRouter);
-app.get('/', (req, res) => {
-  res.sendFile('./dist/index.html');
-});
 
-app.get('/v1/api-docs', (req, res) => {
-  res.status(200).json(openApi.getApiDoc());
-});
-
+if (process.env.MODE !== 'prod') {
+  app.get('/', (req, res) => {
+    res.sendFile('./dist/index.html');
+  });
+  app.get('/v1/api-docs', (req, res) => {
+    res.status(200).json(openApi.getApiDoc());
+  });
+}
 const appPort = parseInt(process.env.PROCESS_PORT ? process.env.PROCESS_PORT : '0', 10);
 
 sequelize.sync();

@@ -5,7 +5,7 @@ import { Route, Switch, Redirect, Link } from 'react-router-dom';
 
 import { Yandex } from '../yandex/Yandex';
 import { MainMenu } from '../MainMenu/MainMenu';
-import {Login} from "../Login/Login";
+import { Login } from '../Login/Login';
 
 const { Header, Content, Footer } = Layout;
 
