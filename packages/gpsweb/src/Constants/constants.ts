@@ -21,6 +21,13 @@ const rus: { [key: string]: string } = {
   mon_12: 'декабря',
   km: 'км',
   m: 'м',
+  logout: 'Выйти',
+  loginVK: 'Войти через VK',
+  loginGoogle: 'Войти через Google',
+  addGeoId: 'Добавить Geo ID',
+  from: 'C',
+  to: 'по',
+  showTracks: 'Показать треки',
 };
 
 export const getText = (id: string) => {

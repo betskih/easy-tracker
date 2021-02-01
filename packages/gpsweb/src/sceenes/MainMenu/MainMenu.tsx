@@ -10,13 +10,15 @@ import { GeoInput } from '../components/GeoInput/GeoInput';
 import {
   addGeoIdAction,
   openCloseGeoId,
-  setEndDateAction, setMapViewParams,
+  setEndDateAction,
+  setMapViewParams,
   setStartDateAction,
 } from '../../services/geoIds/actions';
 import { getGeoIdsSelector } from '../../services/geoIds/selector';
-import { DATE_FORMAT, LOCAL_ZONE } from '../../Constants/constants';
+import { DATE_FORMAT, getText, LOCAL_ZONE } from '../../Constants/constants';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TrackList } from '../components/TrackList/TrackList';
+import { UserHeader } from '../components/UserHeader/UserHeader';
 
 // dayjs.extend(utc);
 // dayjs.extend(timezone);
@@ -28,6 +30,7 @@ export const MainMenu: FunctionComponent<IMainMenuProps> = () => {
   const [isModal, showModal] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+
   const dispatch = useDispatch();
   const ids = useSelector(getGeoIdsSelector);
   const addGeoId = useCallback(() => {
@@ -71,31 +74,42 @@ export const MainMenu: FunctionComponent<IMainMenuProps> = () => {
     [dispatch],
   );
 
-  const onTrackPress = useCallback((geoId)=>(index: number) => {
-    dispatch(setMapViewParams({ geoId, index}));
-  }, [dispatch]);
+  const onTrackPress = useCallback(
+    (geoId) => (index: number) => {
+      dispatch(setMapViewParams({ geoId, index }));
+    },
+    [dispatch],
+  );
 
   return (
     <div className={'container'}>
-      <Button circular primary icon="plus" onClick={addGeoId} />
+      <UserHeader />
       {isModal && <GeoInput onClose={onClose} onAdd={onAdd} />}
+      <span className={'text-style'}>{getText('showTracks')}</span>
       <div className={'calendar'}>
+        <span className={'text-style'}>{getText('from')}</span>
         <DatePicker
           locale={LOCAL_ZONE}
           dateFormat={DATE_FORMAT}
           selected={startDate}
           onChange={onSetStartDate}
           maxDate={endDate}
+          className={'date-picker'}
         />
+        <span className={'text-style'}>{getText('to')}</span>
         <DatePicker
           locale={LOCAL_ZONE}
           dateFormat={DATE_FORMAT}
           selected={endDate}
           onChange={onSetEndDate}
           minDate={startDate}
+          className={'date-picker'}
         />
       </div>
-
+      <Button className={'add-geoid'} color="blue" onClick={addGeoId}>
+        <Icon name={'plus'} />
+        {getText('addGeoId')}
+      </Button>
       <Accordion>
         {ids.map((item, index) => (
           <div key={index}>

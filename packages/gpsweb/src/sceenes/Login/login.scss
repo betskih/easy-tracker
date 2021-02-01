@@ -1,0 +1,17 @@
+.login-modal{
+  width: 300px;
+  min-height: 200px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px 20px;
+  .close-button{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    left: 97%;
+    top: -40px;
+  }
+  .splitter {
+    height: 20px;
+  }
+}
