@@ -1,15 +1,44 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import './MainScreen.scss';
 import { Layout, Menu } from 'antd';
+import { get } from 'lodash';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import firebase from 'firebase';
 import { Yandex } from '../yandex/Yandex';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { Login } from '../Login/Login';
+import { saveFireBaseAuthData } from '../../services/firebase/actions';
 
-const { Header, Content, Footer } = Layout;
+
+const { Header, Content } = Layout;
 
 export const AppContainer: FunctionComponent<{}> = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    firebase
+      .app()
+      .auth()
+      .onAuthStateChanged((user) => {
+        if (user === null) {
+          dispatch(saveFireBaseAuthData({ isSignedIn: false, providerId: 'none', firebaseUser: null }));
+          return;
+        }
+        if (user.providerData && user.providerData[0]) {
+          dispatch(
+            saveFireBaseAuthData(
+              JSON.parse(
+                JSON.stringify({
+                  isSignedIn: true,
+                  providerId: get(user, 'providerData.0.providerId', 'unknown'),
+                  firebaseUser: user,
+                }),
+              ),
+            ),
+          );
+        }
+      });
+  }, [dispatch]);
   return (
     <Layout style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
       <Layout>
@@ -37,7 +66,6 @@ export const AppContainer: FunctionComponent<{}> = () => {
             <Route path={'*'} render={() => <div>404 NOT FOUND</div>} />
           </Switch>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>@Dmitriy&Ko</Footer>
       </Layout>
       <div className={'right-side'}>
         <MainMenu />

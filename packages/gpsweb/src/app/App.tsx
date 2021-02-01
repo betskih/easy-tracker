@@ -1,25 +1,32 @@
 import React, { FunctionComponent } from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'antd/dist/antd.css';
 
-import { FirebaseAuthProvider } from '@react-firebase/auth';
 import { AppContainer } from '../sceenes/MainScreen/AppContainer';
 import { ErrorBoundary } from './ErrorBoundary';
 import { configureStore } from './store-config';
 import { fbConfig } from './root-reducer';
 
 export const App: FunctionComponent<{}> = () => {
-  const store = configureStore();
+  const { store, persistor } = configureStore();
+  try {
+    firebase.initializeApp(fbConfig);
+  } catch (err) {
+    if (err.code !== 'app/duplicate-app') {
+      throw err;
+    }
+  }
 
   return (
     <BrowserRouter>
       <ErrorBoundary>
         <Provider store={store}>
-          <FirebaseAuthProvider firebase={firebase} {...fbConfig}>
+          <PersistGate loading={null} persistor={persistor}>
             <AppContainer />
-          </FirebaseAuthProvider>
+          </PersistGate>
         </Provider>
       </ErrorBoundary>
     </BrowserRouter>
