@@ -17,10 +17,13 @@ export type GeoDataByID = {
 };
 
 export type GeoIdItem = { id: string; isOpened: boolean };
+
+export type GeoView = { geoId: string; index: number } | undefined;
+
 export interface GeoIdsState {
   ids: GeoIdItem[];
-  view: {geoId :string, index: number} | undefined;
+  view: GeoView;
   geoData: { [geoId: string]: GeoDataByID } | {};
-  startDate: undefined | number,
-  endDate: undefined | number,
+  startDate: undefined | number;
+  endDate: undefined | number;
 }
