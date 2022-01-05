@@ -4,7 +4,6 @@ import { IApiAction } from './types';
 export const FETCH_GEO_DATA_BY_ID = 'FETCH_GEO_DATA_BY_ID';
 export const UPDATE_GEO_DATA_BY_ID = 'UPDATE_GEO_DATA_BY_ID';
 
-
 export interface IFetchGeoData extends IApiAction {
   type: typeof FETCH_GEO_DATA_BY_ID;
 }
@@ -25,7 +24,6 @@ export const fetchGeoData = ({
     data: { geoId, startDate, endDate },
   },
 });
-
 
 export interface IUpdateGeoData extends IApiAction {
   type: typeof UPDATE_GEO_DATA_BY_ID;
@@ -48,6 +46,4 @@ export const updateGeoData = ({
   },
 });
 
-
 export type RequestActions = IFetchGeoData | IUpdateGeoData;
-
