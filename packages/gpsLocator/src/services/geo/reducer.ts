@@ -1,7 +1,14 @@
 import { get, reduce, set } from 'lodash';
 import { success, error } from 'redux-saga-requests';
 import { GeoPoint } from './types';
-import { IGeoAction, SEND_GEO_DATA, SET_NEW_LOCATION } from './actions';
+import {
+  IGeoAction,
+  SEND_GEO_DATA,
+  SET_IS_BACKGROUND,
+  SET_NEW_LOCATION,
+  START_RECORDING,
+  STOP_RECORDING,
+} from './actions';
 
 export interface IGeoState {
   [k: number]: GeoPoint[];
@@ -9,6 +16,8 @@ export interface IGeoState {
   lastIndex: number;
   lastAmount: number;
   pending: number;
+  isRecording: boolean;
+  isBackground: boolean;
 }
 
 export const initialState: IGeoState = {
@@ -16,6 +25,8 @@ export const initialState: IGeoState = {
   lastIndex: 0,
   lastAmount: 0,
   pending: 0,
+  isRecording: false,
+  isBackground: false,
   0: [],
 };
 
@@ -37,7 +48,7 @@ export function geo(state: IGeoState = initialState, action: IGeoAction): IGeoSt
       const branch = get(state, state.firstIndex, []);
       if (count === branch.length) {
         if (state.firstIndex === state.lastIndex) {
-          return { 0: [], firstIndex: 0, lastAmount: 0, lastIndex: 0, pending: 0 };
+          return { ...state, 0: [], firstIndex: 0, lastAmount: 0, lastIndex: 0, pending: 0 };
         } else {
           return {
             ...reduce(
@@ -76,6 +87,12 @@ export function geo(state: IGeoState = initialState, action: IGeoAction): IGeoSt
       return { ...state, pending: 0 };
     case SEND_GEO_DATA:
       return { ...state, pending: 1 };
+    case START_RECORDING:
+      return { ...state, isRecording: true };
+    case STOP_RECORDING:
+      return { ...state, isRecording: false };
+    case SET_IS_BACKGROUND:
+      return { ...state, isBackground: action.isBackground };
     default:
       return state;
   }

@@ -29,6 +29,7 @@ export const DashboardView: FunctionComponent<IDashboardViewProps> = ({
               <Text style={styles.showIdText}>{getText('pressToShow')}</Text>
             </TouchableOpacity>
             <Text>{`API URL: ${getApiURL()}`}</Text>
+            <Text>{`Array Length: ${items.length}`}</Text>
           </View>
         </View>
         <View style={styles.infoContainer} />

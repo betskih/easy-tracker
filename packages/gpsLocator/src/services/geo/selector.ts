@@ -10,7 +10,7 @@ export const getLastArray = createSelector(getGeoState, (state) =>
 );
 
 export const getLastArrayList = createSelector(getLastArray, (state) => {
-  return state.map((item) => ({
+  return state.map((item: any) => ({
     time: dayjs(item.timestamp).format('HH:mm'),
     latitude: item.coords.latitude,
     longitude: item.coords.longitude,
@@ -21,5 +21,7 @@ export const getLastArrayList = createSelector(getLastArray, (state) => {
 export const getFirstArray = createSelector(getGeoState, (state) =>
   get(state, `${state.firstIndex}`, []),
 );
+
+export const getIsBackground = createSelector(getGeoState, (state) => state.isRecording);
 
 export const getGeoPending = createSelector(getGeoState, (state) => get(state, 'pending'));

@@ -1,3 +1,5 @@
+import { IGeoState } from '../services/geo/reducer';
+
 export enum LogLevel {
   INFO = 'INFO',
   WARNING = 'WARNING',
@@ -27,4 +29,5 @@ export interface IAppState {
 
 export interface IStoreState {
   app: IAppState;
+  geo: IGeoState;
 }

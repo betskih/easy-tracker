@@ -15,12 +15,14 @@ export const GeoInput: FunctionComponent<IGeoInputProps> = ({
   onAdd = () => {},
 }) => {
   const [geoId, setGeoId] = useState('532367811');
+
   const onChange = useCallback((e, data) => {
-    const isDigit = data.value.slice(-1).match(/[0-9]/);
-    if (isDigit && data.value.length <= GEO_ID_LENGTH) {
+    const isDigit = Number(data.value);
+      if (isDigit>=0 && data.value.length <= GEO_ID_LENGTH) {
       setGeoId(data.value);
     }
   }, []);
+
   const onAddValue = useCallback(() => {
     onAdd(geoId);
   }, [onAdd, geoId]);
